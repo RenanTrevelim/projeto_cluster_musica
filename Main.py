@@ -21,7 +21,6 @@ with st.expander("Como funciona a recomendação?"):
     3. **Agrupamento K-Means**: As músicas são separadas em grupos (clusters). A recomendação é feita buscando as músicas mais próximas da música escolhida dentro do mesmo grupo.
 
     A distância entre as músicas é calculada no espaço reduzido, encontrando as 10 mais parecidas.
-    Teste Renan
     """)
 
 # Carrega modelos/artefatos
@@ -64,7 +63,7 @@ if enviar:
         st.warning("Por favor, digite o nome de uma música.")
     else:
         st.success("Música enviada!")
-        st.write("As músicas sugeridas são:")
+        st.write("Músicas Recomendadas:")
 
         # Prepara dados (mesma lógica)
         dados = pd.read_csv('dados_musicas.csv', sep=';')
