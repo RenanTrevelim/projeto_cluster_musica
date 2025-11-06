@@ -21,6 +21,7 @@ with st.expander("Como funciona a recomendação?"):
     3. **Agrupamento K-Means**: As músicas são separadas em grupos (clusters). A recomendação é feita buscando as músicas mais próximas da música escolhida dentro do mesmo grupo.
 
     A distância entre as músicas é calculada no espaço reduzido, encontrando as 10 mais parecidas.
+    Teste Renan
     """)
 
 # Carrega modelos/artefatos
