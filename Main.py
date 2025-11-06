@@ -4,14 +4,14 @@ import joblib
 import numpy as np
 from scipy.spatial.distance import euclidean
 
-# Configuração básica da página
+
 st.set_page_config(page_title="Sugestão de Música", page_icon="🎧", layout="centered")
 
-# Título e instruções
+# Título e descrição da página
 st.title("Sugestão de Música 🎧")
 st.write("Digite o nome de uma música e veja 10 sugestões parecidas.")
 
-# Explicação do algoritmo (apenas visual)
+# Criando uma caixinha para explicar como foi densenvolvido o sistema de recomendação
 with st.expander("Como funciona a recomendação?"):
     st.write("""
     O sistema utiliza técnicas de **Machine Learning** para sugerir músicas similares. O processo é dividido em três etapas principais:
@@ -23,16 +23,16 @@ with st.expander("Como funciona a recomendação?"):
     A distância entre as músicas é calculada no espaço reduzido, encontrando as 10 mais parecidas.
     """)
 
-# Carrega modelos/artefatos
+# Carregando o scaler (pré-processamento), PCA e modelo KMeans
 scaler = joblib.load('scaler(2).pkl')
 pca = joblib.load('pca(1).pkl')
 kmeans = joblib.load('modelo_kmeans(2).pkl')
 
-# Entrada do usuário
+# Caixa de entrada para o nome da música e botão para envio
 musica = st.text_input("Digite o nome de uma música:")
 enviar = st.button("Enviar")
 
-# Função original de recomendação (lógica inalterada)
+# Função que faz toda a recomendação por trás da música colocada
 def recomendacao(musica, df):
     nome_musica = musica
 
@@ -49,7 +49,6 @@ def recomendacao(musica, df):
         axis=1
     )
 
-    # remove a própria música
     musicas_recomendadas = musicas_recomendadas[
         musicas_recomendadas['artists_song'] != nome_musica
     ]
@@ -57,7 +56,7 @@ def recomendacao(musica, df):
     recomendadas = musicas_recomendadas.sort_values('Dist').head(10)[['artists_song']]
     return recomendadas
 
-# Quando clicar no botão
+# Executar a recomendação quando o botão for clicado
 if enviar:
     if musica.strip() == "":
         st.warning("Por favor, digite o nome de uma música.")
@@ -65,7 +64,6 @@ if enviar:
         st.success("Música enviada!")
         st.write("Músicas Recomendadas:")
 
-        # Prepara dados (mesma lógica)
         dados = pd.read_csv('dados_musicas.csv', sep=';')
         df = dados.copy()
         dados = dados.drop(['artists', 'id', 'name', 'artists_song'], axis=1)
@@ -76,7 +74,6 @@ if enviar:
         df[['pca1', 'pca2']] = dados_pca
         df['cluster'] = cluster
 
-        # Recomendações
         try:
             musicas_recomendadas = recomendacao(musica, df)
             st.table(musicas_recomendadas.reset_index(drop=True))
