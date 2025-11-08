@@ -45,8 +45,6 @@ O sistema possui uma interface simples e intuitiva, onde o usuário digita o nom
 - K-Means Clustering
 - Streamlit (Interface Web)
 
----
 
-## 📂 Estrutura do Projeto
 
 
